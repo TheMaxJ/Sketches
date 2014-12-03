@@ -4,8 +4,10 @@ ArrayList<Integer> list = new ArrayList<Integer>();
 for (int i = 0; i < 10; i++) {
    list.add((int)random(10000));
 }
+
 println("Unsorted:");
 println(list);
+
 int k = 0;
 int pos = 0;
 do {
