@@ -1,11 +1,13 @@
 ArrayList<Planet> planets = new ArrayList<Planet>();
-float G = 6.67384 * pow(10,-11);
+float G = 6.67384 * pow(10,-11); // Universal Gravitational Constant
 PVector mDown;
+Sun sun;
 
 void setup() {
   size (500, 500);
-  println(G);
-  planets.add(new Planet(10, Float.MAX_VALUE, new PVector(width/2, height/2), new PVector(0,0)));
+  sun = new Sun();
+  planets.add(sun);
+  //noStroke();
 }
 
 void draw() {
@@ -17,7 +19,6 @@ void draw() {
 
 void mousePressed() {
   mDown = new PVector(mouseX, mouseY);
-  //planets.add(new Planet(20, 50000, new PVector(mouseX, mouseY), PVector.random2D()));
 }
 
 void mouseReleased() {
@@ -47,8 +48,8 @@ class Planet {
   }
   
   void update() {
-    location.add(velocity);
     effectByGravity();
+    location.add(velocity);
     draw();
   }
   
@@ -63,23 +64,37 @@ class Planet {
   void gravitateTowards(Planet planet) {
     float dist = this.location.dist(planet.location);
     float mass2 = planet.mass;
-    
     float force = (G * mass * mass2) / pow(dist, 2);
     PVector gravity = planet.location.get();
     gravity.sub(location);
     gravity.normalize();
-    
+    gravity.add(force/mass, force/mass, 0);
     println(force);
-    location.add(gravity);
+    println(mass);
+    println(force/mass);
+    
+    velocity.add(gravity);
     
     dist = this.location.dist(planet.location);
     if (dist <= radius) {
-      velocity.rotate(PI);
-    } 
+      PVector bounce = PVector.fromAngle(2 * velocity.heading() + PI);
+      bounce.mult(force);
+      velocity.add(bounce);
+    }
   }
   
   void draw() { 
     ellipse(location.x, location.y, radius, radius);
+  }
+}
+
+class Sun extends Planet {
+  Sun() {
+    super(10, 10000, new PVector(width/2, height/2), new PVector(0,0));
+  }
+  
+  void effectByGravity() {
+    //do nothing, because the sun is cool
   }
 }
   
