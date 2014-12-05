@@ -42,15 +42,15 @@ class Field {
       }
     }
   }
-
-  void update() {
-    for (Node node : open) {
-      node.update();
-    }
-    for (Node node : closed) {
-      node.update();
-    }
-  }
+//
+//  void update() {
+//    for (Node node : open) {
+//      node.update();
+//    }
+//    for (Node node : closed) {
+//      node.update();
+//    }
+//  }
 
   void execute() {
     if (!finished) {
@@ -64,7 +64,6 @@ class Field {
         best.traceBack(best);
       }
       println(best.location.toString());
-      update();
     }
   }
 
@@ -108,6 +107,7 @@ class Node {
 
   void setState(int s) {
     state = s;
+    update();
   }
 
   void open(Node prev) {
@@ -115,7 +115,7 @@ class Node {
       if (!field.open.contains(this) && !field.closed.contains(this)) {
         setPrev(prev);
         field.open.add(this);
-        state = UNCHECKED;
+        setState(UNCHECKED);
       }
     }
   }
@@ -125,7 +125,7 @@ class Node {
       field.open.remove(this);
     }
     field.closed.add(this);
-    this.state = CLOSED;
+    setState(CLOSED);
   }
 
   void openAdjacent() {
@@ -144,7 +144,7 @@ class Node {
   }
 
   int calc() {
-    return (int) (this.location.dist(field.target)) + 10 * G;
+    return (int) (this.location.dist(field.target)) + G;
   }
 
   void openAt(int x, int y) {

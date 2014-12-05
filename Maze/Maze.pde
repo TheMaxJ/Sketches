@@ -13,10 +13,10 @@ void setup() {
   field = new Field(maze, new PVector(0,0), new PVector(width, height));
   frameRate(60);
   println("Populated. Finished Setup. Executing. Stand By.");
+  image(maze,0,0);
 }
 
 void draw() {
-  image(maze);
   field.execute();
 }
 
