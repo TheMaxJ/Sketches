@@ -63,7 +63,6 @@ class Field {
         finished = true;
         best.traceBack(best);
       }
-      println(best.location.toString());
     }
   }
 
@@ -73,9 +72,6 @@ class Field {
       if (currentBest == null || currentBest.calc() > node.calc()) {
         currentBest = node;
       }
-    }
-    if (currentBest == null) {
-      println(open.size());
     }
     return currentBest;
   }
@@ -115,7 +111,7 @@ class Node {
       if (!field.open.contains(this) && !field.closed.contains(this)) {
         setPrev(prev);
         field.open.add(this);
-        setState(UNCHECKED);
+        setState(CHECKED);
       }
     }
   }
@@ -144,7 +140,7 @@ class Node {
   }
 
   int calc() {
-    return (int) (this.location.dist(field.target)) + G;
+    return (int) (this.location.dist(field.target)) + 2 * G;
   }
 
   void openAt(int x, int y) {
