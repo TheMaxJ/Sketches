@@ -2,6 +2,9 @@ PImage maze;
 Field field;
 PVector start;
 PVector stop;
+long millis;
+AsyncInformer info;
+boolean started;
 
 void setup() {
   println("Starting! Beginning Startup...");
@@ -13,22 +16,25 @@ void setup() {
   image(maze, 0, 0);
   size(maze.width, maze.height);
   println("Please select two points, beginning and end.");
-  frameRate(1000);
 }
 
 void draw() {
-  if (start != null && stop != null) {
-    field.execute();
+  if (started) {  
+    if (field == null) {
+      Thread fieldThread = new Thread((field = new Field(maze,start,stop)));
+      fieldThread.start();
+    }
   } else {
-      image(maze, 0, 0);
+    image(maze, 0, 0);
   }
 }
 
 void beginExecution() {
-  field = new Field(maze, start, stop);
   frameRate(60);
   println("Populated. Finished Setup. Executing.");
-  image(maze,0,0);
+  image(maze, 0, 0);
+  millis = millis();
+  started = true;
 }
 
 void mousePressed() {
@@ -41,5 +47,9 @@ void mousePressed() {
     beginExecution();
   }
 }
+
+
+
+
 
 

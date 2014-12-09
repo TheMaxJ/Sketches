@@ -1,5 +1,0 @@
-int PATH = #00B0ED;
-int CHECKED = #00ED1D;
-int UNCHECKED = #FFFFFF;
-int CLOSED = #FE0AFF;
-int EDGE = 0;
