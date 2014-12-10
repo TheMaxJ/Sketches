@@ -14,10 +14,14 @@ Field field; // The field instance
 
 void setup() {
   showProgress = true;
-    
+  
   while(maze == null) {
-    maze = loadImage(JOptionPane.showInputDialog("Enter an image url"));
-  } 
+    try {
+      maze = loadImage(JOptionPane.showInputDialog("Enter an image url"));
+    } catch (NullPointerException npe) {
+      println("Invalid maze");
+    }
+  }
   maze.filter(THRESHOLD, .3);
  
   size(maze.width, maze.height);
@@ -30,7 +34,7 @@ void draw() {
       Thread fieldThread = new Thread((field = new Field(maze, start, stop)));
       fieldThread.start();
     }
-  } 
+  }
 }
 
 void beginExecution() {
