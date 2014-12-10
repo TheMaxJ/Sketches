@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 PImage maze; // Loaded maze image
 
 PVector start; // Start of maze
@@ -11,21 +13,15 @@ boolean showProgress; // Should it animate?
 Field field; // The field instance
 
 void setup() {
-  
   showProgress = true;
-  
-  println("Starting! Beginning Startup...");
-  println("Loading maze.png...");
-  maze = loadImage("maze.png");
-  
-  println("maze.png found. Beginning black/white filtering.");
-  maze.filter(THRESHOLD, .03);
-  println("Finished Filtering.");
-  
+    
+  while(maze == null) {
+    maze = loadImage(JOptionPane.showInputDialog("Enter an image url"));
+  } 
+  maze.filter(THRESHOLD, .3);
+ 
   size(maze.width, maze.height);
   image(maze, 0, 0);
-
-  println("Please select two points, beginning and end.");
 }
 
 void draw() {
