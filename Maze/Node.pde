@@ -60,7 +60,7 @@ class Node {
   }
 
   int calc() {
-    return (int) (this.location.dist(field.target)) + 2 * G;
+    return (int) (this.location.dist(field.target)) + G;
   }
 
   void openAt(int x, int y) {
