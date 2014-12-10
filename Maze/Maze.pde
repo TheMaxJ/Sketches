@@ -1,31 +1,40 @@
-PImage maze;
-Field field;
-PVector start;
-PVector stop;
-long millis;
-boolean started;
+PImage maze; // Loaded maze image
+
+PVector start; // Start of maze
+PVector stop; // End of maze
+
+long millis; // Starting time in millis
+
+boolean started; // Has the program started yet?
+boolean showProgress; // Should it animate?
+
+Field field; // The field instance
 
 void setup() {
+  
+  showProgress = true;
+  
   println("Starting! Beginning Startup...");
   println("Loading maze.png...");
   maze = loadImage("maze.png");
+  
   println("maze.png found. Beginning black/white filtering.");
   maze.filter(THRESHOLD, .03);
   println("Finished Filtering.");
-  image(maze, 0, 0);
+  
   size(maze.width, maze.height);
+  image(maze, 0, 0);
+
   println("Please select two points, beginning and end.");
 }
 
 void draw() {
   if (started) {  
     if (field == null) {
-      Thread fieldThread = new Thread((field = new Field(maze,start,stop)));
+      Thread fieldThread = new Thread((field = new Field(maze, start, stop)));
       fieldThread.start();
     }
-  } else {
-    image(maze, 0, 0);
-  }
+  } 
 }
 
 void beginExecution() {
@@ -44,6 +53,8 @@ void mousePressed() {
     stop = new PVector(mouseX, mouseY);
     println("Ending Point chosen. Beginning Setup.");
     beginExecution();
+  } else {
+    showProgress = !showProgress;
   }
 }
 

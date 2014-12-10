@@ -15,8 +15,7 @@ class Node {
   }
 
   void path() {
-    fill(color(255, 0, 0));
-    stroke(color(255, 0, 0));
+    stroke(PATH_COLOR);
     point(location.x, location.y);
   }
 
@@ -25,8 +24,7 @@ class Node {
       if (!field.open.contains(this) && !field.closed.contains(this)) {
         setPrev(prev);
         field.open.add(this);
-        stroke(#121212);
-        point(location.x, location.y);
+        _point(OPEN_COLOR);
       }
     }
   }
@@ -36,8 +34,14 @@ class Node {
       field.open.remove(this);
     }
     field.closed.add(this);
-    stroke(#212121);
-    point(location.x, location.y);
+    _point(CLOSE_COLOR);
+  }
+  
+  void _point(int c) {
+    if (showProgress) {
+      stroke(c);
+      point(location.x, location.y);
+    }
   }
 
   void openAdjacent() {
