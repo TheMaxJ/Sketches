@@ -14,7 +14,7 @@ class Node {
     this.G = previous.G + 1;
   }
 
-  void update() {
+  void path() {
     fill(color(255, 0, 0));
     stroke(color(255, 0, 0));
     point(location.x, location.y);
@@ -66,7 +66,7 @@ class Node {
   }
 
   void traceBack(Node node) {
-    node.update();
+    node.path();
     if (node.previous != node) {
       traceBack(node.previous);
     }
