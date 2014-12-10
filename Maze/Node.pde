@@ -60,7 +60,9 @@ class Node {
   }
 
   void openAt(int x, int y) {
-    field.nodes[x][y].open(this);
+    if(x >= 0 && y >= 0 && x < field.nodes.length && y < field.nodes[0].length) {
+      field.nodes[x][y].open(this);
+    }
   }
 
   void traceBack(Node node) {
