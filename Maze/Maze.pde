@@ -3,7 +3,6 @@ Field field;
 PVector start;
 PVector stop;
 long millis;
-AsyncInformer info;
 boolean started;
 
 void setup() {
