@@ -29,8 +29,6 @@ public class FrameController {
       drawSong();
       break;
     default:
-      //Impossible
-      println("Whaaaaaaaaaaaaaaattttttttt??!!?!?!?!!!11?1");
     }
   }
   /**
@@ -38,8 +36,8 @@ public class FrameController {
    */
   public void finalizeTypingSession(Track track) {
     currentTrack = track;
-    player = minim.loadFile(currentTrack.getStreamUrl()); //Streams the file
-    fft = new FFT(player.bufferSize(), player.sampleRate()); //Calls fft on it. Can't say I understand the math behind this class, but I understand it at surface-level
+    player2 = minim.loadFile(currentTrack.getStreamUrl());
+    fft = new FFT(player2.bufferSize(), player2.sampleRate());
     session.startIntroSession(); //Updates session type
   }
   /**
@@ -47,6 +45,11 @@ public class FrameController {
    */
   private void drawTyping() {
     background(BACKGROUND_COLOR);
+    fft = new FFT(player.bufferSize(), player.sampleRate());
+    fft.forward(player.mix);
+    if (isBeat()) {
+      session.startSongSession();
+    }
     drawSearchBar();
     fill(TEXT_COLOR_2); //White Font
     textFont(font, 18);
@@ -57,38 +60,28 @@ public class FrameController {
    * Just throwing a bit of humor in there because why not.
    */
   private void drawIntro() {
-    int frames = session.getSessionFrames();
-    float stage = frames / 20;
-    String text = "";
-
     drawBackground();
-    if (stage < 1) {
-      text = "Playing " + currentTrack.getTitle();
-    } else if (stage < 2) {
-      text = "Created by Max Johnson at Phoenix Country Day School";
-    } else {
-      session.startSongSession();
-      player.play();
-      return;
-    }
-    fill(TEXT_COLOR_1);
-    textAlign(CENTER);
-    text(text, width/2, height/2);
+    session.startSongSession();
+    player2.play();
   }
   /**
    * This is the important part. Plays that animation I made in class.
    */
   private void drawSong() {
     //Runs fft calulations
-    fft.forward(player.mix);
+    if (player2 != null) {
+      fft.forward(player2.mix);
+    } else {
+      fft.forward(player.mix);
+    }
     //Decides whether the song is intense enough
     if (isBeat() || frameCount == 0) {
       updateSong();
     }
     //Returns to typing if the song is over to get a new song.
-    if (!player.isPlaying()) {
-      session.startTypingSession();
-    }
+    //if (!player.isPlaying()) {
+     // session.startTypingSession();
+    //}
   }
   /**
    * Called based on how loud the song is. Might mess with the threshold a bit.
@@ -147,7 +140,7 @@ public class FrameController {
    * Uses fft's built in average calc to decide whether it is loud enough.
    */
   private boolean isBeat() {
-    return fft.calcAvg(20, 20000) * 5 > 1; //Instead of specSize use the range of human hearing. No need to care about anything outside of that.
+    return fft.calcAvg(20, 20000) * 10 > 1; //Instead of specSize use the range of human hearing. No need to care about anything outside of that.
   }
   /**
    * gets search results

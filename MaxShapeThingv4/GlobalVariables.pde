@@ -31,6 +31,9 @@ final SoundCloud soundCloudAPI = new SoundCloud("8e4a0596a16e19f6b4b159b973ac734
 
 //  Changing values
 //AudioPlayer player;
-AudioPlayer player;
+AudioInput player;
+AudioPlayer player2;
 Minim minim;
 FFT fft;
+
+boolean isPlayingSong = false;

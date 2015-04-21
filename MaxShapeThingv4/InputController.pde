@@ -2,7 +2,7 @@ public class InputController {
   private String typedText; //Keeps track of what's been written. Also used to display the text.
 
   public InputController() {
-    typedText = "Search for a song";
+    typedText = "Search for a song or begin playing music on the computer.";
   }
   /**
    * Called on key-press by the main class. Uses code borrowed from the internet to gather key input.

@@ -19,6 +19,7 @@ void setup() {
     COLLUMS++;
   }
   minim = new Minim(this); //Main class of the library used to stream audio
+  player = minim.getLineIn();
 }
 /**
 * Called FRAME_RATE times every second.
