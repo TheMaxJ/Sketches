@@ -108,7 +108,7 @@ int calculateNearby(int x, int y) {
 void populateInitialGrid() {
   // pop is now based on mouse
   grid = new boolean[width][height];
-  int spawns = (int)random(100) + 10;
+  int spawns = 100;
   for (int i = 0; i < spawns; i++) {
       rspawn((int)random(width-20)+10,(int)random(height-20)+10); 
   }
