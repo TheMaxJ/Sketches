@@ -16,13 +16,13 @@ public class SessionController {
   }
   //These all set the session to various modes.
   public void startTypingSession() {
-    setSessionType(TYPING); //0 == typing
+    setSessionType(TYPING); // 0 == typing
   }
   public void startIntroSession() {
-    setSessionType(INTRO); //1 == Intro
+    setSessionType(INTRO); // 1 == Intro
   }
   public void startSongSession() {
-    setSessionType(SONG); //2 == song is playing 
+    setSessionType(SONG); // 2 == song is playing 
   }
   //Basic getters
   /**

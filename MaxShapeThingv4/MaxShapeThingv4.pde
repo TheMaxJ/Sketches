@@ -8,7 +8,7 @@ import ddf.minim.analysis.*;
 */
 void setup() {
   //Setup size using final vars. You should be able to change them to scale the amount of shapes created.
-  size(RES_X, RES_Y);
+  size(RES_X, RES_Y, P2D);
   //Same thing as the setup
   frameRate(FRAME_RATE);
   //These two for loops just count how many rows and collums we are going to have.
@@ -20,9 +20,11 @@ void setup() {
   }
   minim = new Minim(this); //Main class of the library used to stream audio
   player = minim.getLineIn();
+  beat = new BeatDetect(player.bufferSize(), player.sampleRate());
+  beat.setSensitivity(100); 
 }
 /**
-* Called FRAME_RATE times every second.
+* Called FRAME_RATE times every second
 */
 void draw() {
   //Use a FrameController class to decide what should be draw. (See FrameController)

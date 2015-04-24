@@ -7,13 +7,13 @@ public class RepeatedPolygon {
   /**
   * Constructor also draws the shape.
   */
-  public RepeatedPolygon(int x, int y, int index, ModeController controller, Mode mode) {
+  public RepeatedPolygon(int x, int y, int index, ModeController controller) {
     cx = x;
     cy = y;
     //Calls the provided mode to get how it should color.
-    int c = mode.getColor(controller, x, y, index); 
-    fill(c);
+    int c = ANIMATION_OBJECT_COLOR; 
     stroke(c);
+    noFill();
     //Draws the 4 corners. Starts index at 1 (inclusive), ends at 5 (exclusive). (4 total)
     for (int i = 1; i < 5; i++) {
       pushMatrix();
@@ -33,7 +33,7 @@ public class CornerPolygon {
   
   public CornerPolygon (int d) {
     direction = d;
-    vertexCount = ((int) random(3)) + 2;
+    vertexCount = (int) ((random(3) + 2) * fft.calcAvg(20,20000));
   }
   //Unused constructor. Might be useful in the future.
   public CornerPolygon(int d, int vc) {

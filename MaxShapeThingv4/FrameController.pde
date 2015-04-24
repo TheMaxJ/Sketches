@@ -5,6 +5,7 @@ public class FrameController {
   private int trackID; //Id of the track. Soundcloud stores songs as IDs in its API.
   private ArrayList<SearchResult> searchResults; //Used to store search results.
   private Track currentTrack; //Type Track from the soundcloud api library.
+  private ArrayList<BeatMarker> beats;
 
   /**
    *  Constructor, sets up var values/initializing
@@ -13,6 +14,7 @@ public class FrameController {
     font = createFont("Helvetica", 18);
     trackID = 0;
     searchResults = new ArrayList<SearchResult>();
+    beats = new ArrayList<BeatMarker>();
   }
   /**
    * Called every frame by void draw(). Decides which "draw" method to use.
@@ -47,6 +49,7 @@ public class FrameController {
     background(BACKGROUND_COLOR);
     fft = new FFT(player.bufferSize(), player.sampleRate());
     fft.forward(player.mix);
+    beat.detect(player.mix);
     if (isBeat()) {
       session.startSongSession();
     }
@@ -71,16 +74,15 @@ public class FrameController {
     //Runs fft calulations
     if (player2 != null) {
       fft.forward(player2.mix);
+      beat.detect(player2.mix);
     } else {
       fft.forward(player.mix);
+      beat.detect(player.mix);
     }
-    //Decides whether the song is intense enough
-    if (isBeat() || frameCount == 0) {
-      updateSong();
-    }
+    updateSong();
     //Returns to typing if the song is over to get a new song.
     //if (!player.isPlaying()) {
-     // session.startTypingSession();
+    // session.startTypingSession();
     //}
   }
   /**
@@ -88,24 +90,41 @@ public class FrameController {
    */
   private void updateSong() {
     drawBackground(); //Simple method at the moment. Just draws the background.
-    
+
     // Starts graphics here
-    Mode mode = modeController.getMode(); //Gets the type of animation to play. (See Mode and Modes files)
-    R_LIMIT = getFFTAvg() * 5; //The randomness var. See Global Vars.
-    int index = 0; //Used to calculate how many have been drawn. Used by certain Modes.
-    for (int y = EDGE_BUFFER+R_RADIUS; y < width-EDGE_BUFFER; y+=SPACING) {
-      for (int x = EDGE_BUFFER+R_RADIUS; x < height-EDGE_BUFFER; x+=SPACING) {
-        index++;
-        RepeatedPolygon poly = new RepeatedPolygon(x, y, index, modeController, mode);
+    //    Mode mode = modeController.getMode(); //Gets the type of animation to play. (See Mode and Modes files)
+    R_LIMIT = getFFTAvg() * 10; //The randomness var. See Global Vars.
+    //    int index = 0; //Used to calculate how many have been drawn. Used by certain Modes.
+    //    for (int y = EDGE_BUFFER+R_RADIUS; y < width-EDGE_BUFFER; y+=SPACING) {
+    //      for (int x = EDGE_BUFFER+R_RADIUS; x < height-EDGE_BUFFER; x+=SPACING) {
+    //        index++;
+    //        RepeatedPolygon poly = new RepeatedPolygon(x, y, index, modeController, mode);
+    //      }
+    //    }
+    RepeatedPolygon poly = new RepeatedPolygon(width/2, height/2, 0, modeController);
+    barGen.draw();
+    if (isBeat()) {
+      beats.add(new BeatMarker());
+    }
+    
+    for (int i = 0; i < beats.size(); i++) {
+      BeatMarker marker = beats.get(i);
+      if (marker.r > width) {
+        beats.remove(marker);
+      } else {
+        marker.draw();
+        i++;
       }
     }
-    barGen.draw();
   }
   /**
    * Super simple background method. Probably doesn't need its own method, but I might add to the background.
    */
   private void drawBackground() {
     background(BACKGROUND_COLOR);
+    if (isBeat()) {
+      
+    }
   }
   /**
    * Used to draw the search bar.
@@ -140,7 +159,7 @@ public class FrameController {
    * Uses fft's built in average calc to decide whether it is loud enough.
    */
   private boolean isBeat() {
-    return fft.calcAvg(20, 20000) * 10 > 1; //Instead of specSize use the range of human hearing. No need to care about anything outside of that.
+    return beat.isHat();
   }
   /**
    * gets search results
@@ -169,6 +188,18 @@ public class FrameController {
    */
   public void resetSearchResults() {
     searchResults = new ArrayList<SearchResult>();
+  }
+}
+
+public class BeatMarker {
+  
+  private int r = 300;    
+  
+  public void draw() {
+    noFill();
+    stroke(BEATMARKER_COLOR, 255 - (r * .4));
+    ellipse(width/2.0,height/2.0,r,r);
+    r+=25;
   }
 }
 
