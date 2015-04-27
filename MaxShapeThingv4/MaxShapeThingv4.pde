@@ -8,16 +8,10 @@ import ddf.minim.analysis.*;
 */
 void setup() {
   //Setup size using final vars. You should be able to change them to scale the amount of shapes created.
-  size(RES_X, RES_Y, P2D);
+  size(RES_X, RES_Y, P3D);
   //Same thing as the setup
   frameRate(FRAME_RATE);
   //These two for loops just count how many rows and collums we are going to have.
-  for (int x = EDGE_BUFFER+R_RADIUS; x < height-EDGE_BUFFER; x+=SPACING) {
-    ROWS++;
-  }
-  for (int y = EDGE_BUFFER+R_RADIUS; y < width-EDGE_BUFFER; y+=SPACING) {
-    COLLUMS++;
-  }
   minim = new Minim(this); //Main class of the library used to stream audio
   player = minim.getLineIn();
   beat = new BeatDetect(player.bufferSize(), player.sampleRate());
@@ -26,9 +20,13 @@ void setup() {
 /**
 * Called FRAME_RATE times every second
 */
+float a = 0;
 void draw() {
   //Use a FrameController class to decide what should be draw. (See FrameController)
   frame.update();
+  a += (fft.calcAvg(20,20000) * 100);
+  camera(10.0 * cos(radians(a)), width/2.0, 10.0 * sin(radians(a)), width/2.0, width/2.0, 0, 0, 1, 0);
+  println(cos(radians(a)));
 }
 /**
 * Called on key-press.
