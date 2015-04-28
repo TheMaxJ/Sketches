@@ -1,6 +1,7 @@
 public class InputController {
   private String typedText; //Keeps track of what's been written. Also used to display the text.
 
+  SongFetcher songfetcher = new SongFetcher();
   public InputController() {
     typedText = "Search for a song or begin playing music on the computer.";
   }
@@ -24,8 +25,8 @@ public class InputController {
           break;
         case ENTER:
         case RETURN:
-          fetchSearchResults();
-          typedText = "";
+          Thread fetch = new Thread(songfetcher);
+          fetch.start();
           break;
         case ESC:
         case DELETE:
@@ -53,19 +54,7 @@ public class InputController {
   /**
    * Used to populate the search result list. Changed to public for inputcontroller
    */
-  public void fetchSearchResults() {
-    int startY = 60; 
-    frame.resetSearchResults();
-    for (Track track : input.searchForTracks (typedText)) {
-      if (track != null && track.isStreamable()) {
-        SearchResult result = new SearchResult(track, startY);
-        result.draw();
-        frame.addSearchResults(result);
-        startY += 55;
-      }
-    }
-    typedText = "Enter Search String: ";
-  }
+
   /**
    * Gets the tracks that meet the title
    */
@@ -84,5 +73,24 @@ public class InputController {
   public void setTyped(String typed) {
     typedText = typed;
   }
+
+  public class SongFetcher implements Runnable {
+    int startY = 60;
+    String text = "";
+    public void run() {
+      text = typedText;
+      typedText = "Searching...";
+      frame.resetSearchResults();
+      for (Track track : input.searchForTracks(text)) {
+        if (track != null && track.isStreamable()) {
+          SearchResult result = new SearchResult(track, startY);
+          frame.addSearchResults(result);
+          startY += 55;
+        }
+      }
+      searchDone = true;
+    }
+  }
 }
+
 

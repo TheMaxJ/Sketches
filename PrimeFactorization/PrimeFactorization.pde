@@ -2,7 +2,7 @@ ArrayList<Integer> factors = new ArrayList<Integer>();
 ArrayList<Integer> primes = new ArrayList<Integer>();
 
 void setup() {
-  int n = 495;
+  int n = 194;
   populatePrimes(495);
   populateFactors(n);
   println(factors);

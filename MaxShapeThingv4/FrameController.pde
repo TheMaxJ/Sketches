@@ -6,7 +6,6 @@ public class FrameController {
   private ArrayList<SearchResult> searchResults; //Used to store search results.
   private Track currentTrack; //Type Track from the soundcloud api library.
   private ArrayList<BeatMarker> beats;
-
   /**
    *  Constructor, sets up var values/initializing
    */
@@ -141,8 +140,10 @@ public class FrameController {
    * Used to display the results
    */
   private void displayResults() {
-    for (SearchResult result : searchResults) {
-      result.draw();
+    if (searchDone) {
+      for (SearchResult result : searchResults) {
+        result.draw();
+      }
     }
   }
   /**
@@ -195,7 +196,7 @@ public class BeatMarker {
     noFill();
     stroke(BEATMARKER_COLOR, 255 - (r * .4));
     ellipse(width/2.0, height/2.0, r, r);
-    r+=25;
+    r+=4;
   }
 }
 
