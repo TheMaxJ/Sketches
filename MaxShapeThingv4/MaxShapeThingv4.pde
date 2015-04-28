@@ -28,20 +28,22 @@ float zu = 0;
 void draw() {
   //Use a FrameController class to decide what should be draw. (See FrameController)
   frame.update();
-  la = a;
-  a += (fft.calcAvg(20, 20000) * 5);
-  float x = 400.0 * cos(radians(a));
-  float y = width/2.0;
-  float z = 400.0 * sin(radians(a));
+  if (session.getSessionType() == SONG) {
+    la = a;
+    a += (fft.calcAvg(20, 20000) * 5);
+    float x = 400.0 * cos(radians(a));
+    float y = width/2.0;
+    float z = 400.0 * sin(radians(a));
 
-  if (frameCount % (FRAME_RATE * 10) == 0) {
-    while (xu == 0 && yu == 0 && zu == 0) {
-      xu = rup();
-      yu = rup();
-      zu = rup();
+    if (frameCount % (FRAME_RATE * 10) == 0) {
+      while (xu == 0 && yu == 0 && zu == 0) {
+        xu = rup();
+        yu = rup();
+        zu = rup();
+      }
     }
+    camera(width/2.0 + x, y, z, width/2.0, height/2.0, 0, xu, yu, zu);
   }
-  camera(width/2.0 + x, y, z, width/2.0, height/2.0, 0, xu, yu, zu);
 }
 
 float rup() {

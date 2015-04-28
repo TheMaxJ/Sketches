@@ -46,6 +46,7 @@ public class FrameController {
    * Draws Typed Text on a black background.
    */
   private void drawTyping() {
+    println("typing");
     background(BACKGROUND_COLOR);
     fft = new FFT(player.bufferSize(), player.sampleRate());
     fft.forward(player.mix);
@@ -80,6 +81,13 @@ public class FrameController {
       beat.detect(player.mix);
     }
     updateSong();
+    
+    if (player2 != null && !player2.isPlaying()) {
+      fft.forward(player.mix);
+      if (fft.calcAvg(20,20000) < .1) {
+        session.startTypingSession();
+      }
+    }
     //Returns to typing if the song is over to get a new song.
     //if (!player.isPlaying()) {
     // session.startTypingSession();
