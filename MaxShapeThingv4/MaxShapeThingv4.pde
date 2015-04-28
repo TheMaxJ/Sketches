@@ -36,11 +36,11 @@ void draw() {
     float z = 400.0 * sin(radians(a));
 
     if (frameCount % (FRAME_RATE * 10) == 0) {
-      while (xu == 0 && yu == 0 && zu == 0) {
+      do {
         xu = rup();
         yu = rup();
         zu = rup();
-      }
+      } while (xu == 0 && yu == 0 && zu == 0);
     }
     camera(width/2.0 + x, y, z, width/2.0, height/2.0, 0, xu, yu, zu);
   }

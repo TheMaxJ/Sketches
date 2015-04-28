@@ -98,7 +98,7 @@ public class FrameController {
    */
   private void updateSong() {
     drawBackground();
-    R_LIMIT = getFFTAvg() * 30; 
+    R_LIMIT = log(getFFTAvg() + 1) * 30 + 3; 
 
     RepeatedPolygon poly = new RepeatedPolygon(width/2, height/2, 0, modeController);
     barGen.draw();
