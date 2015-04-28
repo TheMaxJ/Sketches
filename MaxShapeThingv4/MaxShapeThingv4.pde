@@ -31,7 +31,7 @@ void draw() {
   frame.update();
   if (session.getSessionType() == SONG) {
     la = a;
-    a += (fft.calcAvg(20, 20000) * 2);
+    a += 1 + (fft.calcAvg(20, 20000) * 2);
     float x = 400.0 * cos(radians(a));
     float y = width/2.0;
     float z = 400.0 * sin(radians(a));
