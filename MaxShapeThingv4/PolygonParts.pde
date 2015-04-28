@@ -33,7 +33,7 @@ public class CornerPolygon {
   
   public CornerPolygon (int d) {
     direction = d;
-    vertexCount = (int) ((random(3) + 2) * fft.calcAvg(20,20000));
+    vertexCount = (int) ((random(3) + 2) * 3 * fft.calcAvg(20,20000));
   }
   //Unused constructor. Might be useful in the future.
   public CornerPolygon(int d, int vc) {
@@ -93,8 +93,6 @@ public class CornerPolygon {
       //Top left
       pushMatrix();
       rotate(PI);
-      bcx += -2;
-      bcy += -2;
       drawCorner(bcx, bcy);
       popMatrix();
       break;
@@ -102,16 +100,12 @@ public class CornerPolygon {
       //top right
       pushMatrix();
       rotate(PI/2);
-      bcx += 2;
-      bcy += -2;
       drawCorner(bcx, bcy);
       popMatrix();
       break;
     case 3:
       //bottom right
       pushMatrix();
-      bcx += 2;
-      bcy += 2;
       drawCorner(bcx, bcy);
       popMatrix();
       break;
@@ -119,8 +113,6 @@ public class CornerPolygon {
       //bottom left
       pushMatrix();
       rotate(-PI/2);
-      bcx += -2;
-      bcy += 2;
       drawCorner(bcx, bcy);
       popMatrix();
       break;

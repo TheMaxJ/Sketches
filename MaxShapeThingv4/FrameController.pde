@@ -89,25 +89,16 @@ public class FrameController {
    * Called based on how loud the song is. Might mess with the threshold a bit.
    */
   private void updateSong() {
-    drawBackground(); //Simple method at the moment. Just draws the background.
+    drawBackground();
+    R_LIMIT = getFFTAvg() * 30; 
 
-    // Starts graphics here
-    //    Mode mode = modeController.getMode(); //Gets the type of animation to play. (See Mode and Modes files)
-    R_LIMIT = getFFTAvg() * 10; //The randomness var. See Global Vars.
-    //    int index = 0; //Used to calculate how many have been drawn. Used by certain Modes.
-    //    for (int y = EDGE_BUFFER+R_RADIUS; y < width-EDGE_BUFFER; y+=SPACING) {
-    //      for (int x = EDGE_BUFFER+R_RADIUS; x < height-EDGE_BUFFER; x+=SPACING) {
-    //        index++;
-    //        RepeatedPolygon poly = new RepeatedPolygon(x, y, index, modeController, mode);
-    //      }
-    //    }
     RepeatedPolygon poly = new RepeatedPolygon(width/2, height/2, 0, modeController);
     barGen.draw();
     if (isBeat()) {
       beats.add(new BeatMarker());
     }
-    
-    for (int i = 0; i < beats.size(); i++) {
+
+    for (int i = 0; i < beats.size (); i++) {
       BeatMarker marker = beats.get(i);
       if (marker.r > width) {
         beats.remove(marker);
@@ -122,9 +113,6 @@ public class FrameController {
    */
   private void drawBackground() {
     background(BACKGROUND_COLOR);
-    if (isBeat()) {
-      
-    }
   }
   /**
    * Used to draw the search bar.
@@ -192,13 +180,13 @@ public class FrameController {
 }
 
 public class BeatMarker {
-  
+
   private int r = 300;    
-  
+
   public void draw() {
     noFill();
     stroke(BEATMARKER_COLOR, 255 - (r * .4));
-    ellipse(width/2.0,height/2.0,r,r);
+    ellipse(width/2.0, height/2.0, r, r);
     r+=25;
   }
 }

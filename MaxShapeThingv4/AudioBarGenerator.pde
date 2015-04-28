@@ -13,12 +13,12 @@ public class AudioBarGenerator {
     float avg = fft.calcAvg(20,20000);
     float line_width = (PI*2*100) / fft.specSize();
     strokeWeight(line_width);
-    for (int i = 20; i < 20000; i++) {
+    for (int i = 0; i < 1000; i++) {
       angle += increment;
       float x1 = width/2  + cos(angle) * 2*_RADIUS;
-      float x2 = width/2  + cos(angle) * (2*_RADIUS+fft.getBand(i));
+      float x2 = width/2  + cos(angle) * (.5 + (2*_RADIUS+2 + fft.getBand(i)));
       float y1 = height/2 + sin(angle) * 2*_RADIUS;
-      float y2 = height/2 + sin(angle) * (2*_RADIUS+fft.getBand(i));
+      float y2 = height/2 + sin(angle) * (.5 + (2*_RADIUS+2 + fft.getBand(i)));
       line(x1, y1, x2, y2);
     }
   }
