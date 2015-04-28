@@ -1,9 +1,7 @@
 public class AudioBarGenerator {
+  
   /**
    * Called every frame. Draws 2 mirrored versions of the audiobars of the song in the format of black lines
-   */
-  /**
-   * Called every frame. Draws 2 mirrored versions of the audiobars of the song.
    */
   public void draw() {
     float increment = (2 * PI)/fft.specSize();
@@ -23,5 +21,6 @@ public class AudioBarGenerator {
       line(x1, y1, x2, y2);
     }
   }
+  
 }
 

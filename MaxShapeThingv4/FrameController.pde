@@ -45,7 +45,6 @@ public class FrameController {
    * Draws Typed Text on a black background.
    */
   private void drawTyping() {
-    println("typing");
     background(BACKGROUND_COLOR);
     fft = new FFT(player.bufferSize(), player.sampleRate());
     fft.forward(player.mix);
@@ -99,7 +98,7 @@ public class FrameController {
     drawBackground();
     R_LIMIT = log(getFFTAvg() + 1) * 30 + 3; 
 
-    RepeatedPolygon poly = new RepeatedPolygon(width/2, height/2, 0, modeController);
+    RepeatedPolygon poly = new RepeatedPolygon(width/2, height/2, 0);
     barGen.draw();
     if (isBeat()) {
       beats.add(new BeatMarker());

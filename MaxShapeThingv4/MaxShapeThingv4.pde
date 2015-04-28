@@ -17,6 +17,7 @@ void setup() {
   beat = new BeatDetect(player.bufferSize(), player.sampleRate());
   beat.setSensitivity(100);
 }
+
 /**
  * Called FRAME_RATE times every second
  */

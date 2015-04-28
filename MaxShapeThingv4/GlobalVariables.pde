@@ -20,7 +20,6 @@ float R_LIMIT = 70; /* Interesting little number, used to calculate how "random"
 
 //Classes I made.
 //  Unchanging values
-final ModeController modeController = new ModeController();
 final AudioBarGenerator barGen = new AudioBarGenerator();
 final FrameController frame = new FrameController();
 final InputController input = new InputController();

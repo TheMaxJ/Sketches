@@ -7,7 +7,7 @@ public class RepeatedPolygon {
   /**
   * Constructor also draws the shape.
   */
-  public RepeatedPolygon(int x, int y, int index, ModeController controller) {
+  public RepeatedPolygon(int x, int y, int index) {
     cx = x;
     cy = y;
     //Calls the provided mode to get how it should color.
