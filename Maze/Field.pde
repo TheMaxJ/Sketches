@@ -23,6 +23,8 @@ class Field implements Runnable {
 
   void populate(PImage image) {
     nodes = new Node[width][height];
+    println(width+","+ height);
+    println(image.width+","+ image.height);
     for (int x = 0; x < image.width; x++) {
       for (int y = 0; y < image.height; y++) {
         if (image.get(x, y) != color(0)) {
@@ -52,6 +54,10 @@ class Field implements Runnable {
 
   Node getBest() {
     Node currentBest = null;
+    if (open.isEmpty()) {
+      println("Failed: No path found.");
+      exit();
+    }
     for (Node node : open) {
       if (currentBest == null || currentBest.calc() > node.calc()) {
         currentBest = node;

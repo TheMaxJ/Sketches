@@ -4,7 +4,7 @@ final int RES_X = 800; //Window width
 final int RES_Y = 800; //Window height
 final int EDGE_BUFFER = (int) (2.5 * R_RADIUS); //Distance separating the first polygon and the edge of the screen
 final int SPACING = (int) (2.5 * R_RADIUS); //Spacing between polygon 
-final int FRAME_RATE = 60; //Frame rate variable
+final int FRAME_RATE = 30; //Frame rate variable
 
 //Replaces Magic Numbers for the sessions.
 final int TYPING = 0;

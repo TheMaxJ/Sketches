@@ -33,7 +33,7 @@ public class CornerPolygon {
   
   public CornerPolygon (int d) {
     direction = d;
-    vertexCount = (int) ((random(3) + 2) * 3 * fft.calcAvg(20,20000));
+    vertexCount = (int) ((random(2) + 2) + 3 * fft.calcAvg(20,20000));
   }
   //Unused constructor. Might be useful in the future.
   public CornerPolygon(int d, int vc) {
